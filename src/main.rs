@@ -248,8 +248,10 @@ fn main() -> Result<()> {
     } else {
         let device = device(args.cpu)?;
         let dtype = if device.is_cuda() {
+            println!("We are CUDA -> DType = BF16");
             DType::BF16
         } else {
+            println!("We are CPU -> DType = F32");
             DType::F32
         };
         let vb = unsafe { VarBuilder::from_mmaped_safetensors(&filenames, dtype, &device)? };
@@ -278,6 +280,7 @@ pub fn device(cpu: bool) -> Result<Device> {
         println!("Running on CPU, as defined");
         Ok(Device::Cpu)
     } else {
+        println!("CPU not explicitly specified, so we determine if we can run on GPU or CPU ...");
         let device = Device::cuda_if_available(0)?;
         if !device.is_cuda() {
             println!("Running on CPU, to run on GPU, build this example with `--features cuda`");
