@@ -37,7 +37,8 @@ export PATH=/usr/local/cuda-12.3/bin${PATH:+:${PATH}}
 echo $PATH
 
 
-git clone https://github.com/huggingface/candle.git
+git clone https://github.com/horowitzathome/mistral.git
+cd mistral
+# git clone https://github.com/huggingface/candle.git
 
 cargo run --features cuda --release -- --prompt 'Tell me 3 presidents of the USA' --sample-len 150  
-
