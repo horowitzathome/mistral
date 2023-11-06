@@ -1,0 +1,43 @@
+Go to GCP and provision a PGU VM with 4 CPUs, 1 GPU and 15GB RAM
+
+lspci | grep -i nvidia
+uname -m && cat /etc/*release
+sudo apt-get update
+sudo apt install git gcc libssl-dev pkg-config
+gcc --version
+uname -r
+wget https://developer.download.nvidia.com/compute/cuda/repos/debian11/x86_64/cuda-keyring_1.1-1_all.deb
+ls
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+ls
+sudo apt-get update
+sudo apt-get -y install software-properties-common
+sudo add-apt-repository contrib
+sudo apt-get update
+sudo apt-get -y install cuda-toolkit-12-3
+sudo apt-get -y install nvidia-kernel-open-dkms
+sudo apt-get -y install cuda-drivers
+sudo apt-get -y install linux-headers-$(uname -r)
+sudo add-apt-repository contrib
+sudo apt-key del 7fa2af80
+wget https://developer.download.nvidia.com/compute/cuda/repos/debian11/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt-get update
+sudo apt-get -y install cuda
+sudo reboot
+
+sudo apt update
+git
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+source "$HOME/.cargo/env"
+
+nvidia-smi --query-gpu=compute_cap --format=csv 
+ls /usr/local/cuda-12.3/
+export PATH=/usr/local/cuda-12.3/bin${PATH:+:${PATH}}
+echo $PATH
+
+
+git clone https://github.com/huggingface/candle.git
+
+cargo run --features cuda --release -- --prompt 'Tell me 3 presidents of the USA' --sample-len 150  
+
